@@ -2,10 +2,18 @@
 
 This repo is testing the mechanics of a new board game I'm in the process of creating. The game is an auctioneering game. Name TBD.
 
-# Setup
+## Setup
 
 ```sh
 conda create -n game-simulator python=3.10
 conda activate game-simulator
 conda install -c conda-forge jupyterlab -y
+pip install pandas
+pip install pytests
+```
+
+## Run tests
+
+```sh
+pytest
 ```

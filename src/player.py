@@ -1,5 +1,8 @@
 import random
 
+from .accept_bids import simple_accept
+from .bids import simple_bid
+
 class Player:
     """
     The bid method places a random bid between 0 and the player's available cash,
@@ -14,7 +17,7 @@ class Player:
     This method does not implement any selling restrictions, such as only allowing players
     to sell once during the game. You can add these restrictions or other selling strategies as needed.
     """
-    def __init__(self, name, starting_cash, first_card, min_sale, buy_rate, bid_strat, accept_strat):
+    def __init__(self, name, starting_cash, first_card, min_sale, buy_rate, bid_strat=simple_bid, accept_strat=simple_accept):
         # Define methods for bidding, accepting bids, and selling cryptocurrencies
         self.name = name
         self.cash = starting_cash

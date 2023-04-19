@@ -71,10 +71,11 @@ Your portfolio: {[card.name for card in self.human_player.portfolio]}
 
 """)
 
-        print(f"Turn's Auctioneer: {auctioneer.name}")
-        print(f"Flipped Card: {card.name}")
+        if auctioneer:
+            print(f"Turn's Auctioneer: {auctioneer.name}")
+            print(f"Flipped Card: {card.name}")
         print("")
-    
+        
     def play_round(self, turn_num):
         if not self.deck:
             return False
@@ -91,7 +92,11 @@ Your portfolio: {[card.name for card in self.human_player.portfolio]}
         if auctioneer in self.player_bots:
             confirmation = False
             while confirmation != True:
-                player_cash_bid = int(input("How, much cash are you betting?: "))
+                player_cash_bid = input("How, much cash are you betting?: ")
+                if player_cash_bid:
+                    player_cash_bid = int(player_cash_bid)
+                else:
+                    player_cash_bid = 0
                 cards_bid = input("Which cards are you betting? (list of index seperated by space): ")
                 player_cards_bid = []
                 if cards_bid:
@@ -116,7 +121,7 @@ Your portfolio: {[card.name for card in self.human_player.portfolio]}
         else:
             print("Players have bid the following...") 
             for bid in bids:
-                print(f"{bid[0]}: ${bid[1][0]} & {[c.name for c in bid[1][1]]}")
+                print(f"{bid[0].name}: ${bid[1][0]} & {[c.name for c in bid[1][1]]}")
             select_bidder = input("Would you like to select a bid? (Blank for fals): ")
             if select_bidder:
                 bidder_selected = False
@@ -153,9 +158,13 @@ Your portfolio: {[card.name for card in self.human_player.portfolio]}
 
         # all players see if they'd like to sell:
         for player in self.player_bots:
+            sold_len = len(player.crypto_sold)
             player.sell_crypto(turn_num)
+            for new_sold in player.crypto_sold[sold_len:]:
+                print(f"Player {player.name} sold {new_sold[1].name}!")
         
         # See if human would like to sell anything?
+        display_turn_state(None, None)
         print(f"Your cash: {self.human_player.cash}")
         print(f"Your portfolio: {[c.name for c in self.human_player.portfolio]} \n")
         wants_to_sell = bool(input("Would you like to sell anything? (blank for no)"))
