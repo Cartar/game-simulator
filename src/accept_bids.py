@@ -1,6 +1,7 @@
+
 def simple_accept(bids, card, buy_rate):
     # If multiple cards in an offer, take that offer:
-    if len(max(bids, key=lambda bid: len(bid[1]))[1]) > 1:
+    if len(max(bids, key=lambda bid: len(bid[1][1]))[1][1]) > 1:
         highest_bid = max(bids, key=lambda bid: len(bid[1][1]))
     # If all offers have single cards, take highest cash offer: 
     else:

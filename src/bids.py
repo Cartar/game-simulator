@@ -7,7 +7,11 @@ def nearest_10(cash, max_pct):
 def simple_bid(card, my_cash, my_cards):
     my_card_names = [my_card.name for my_card in my_cards]
     counted = Counter(my_card_names)
-    eligible_cards = sorted([my_card for my_card in my_cards if my_card.name != card.name], key=lambda i: i.value)
+    eligible_cards = sorted(
+        [my_card for my_card in my_cards if my_card.name != card.name],
+        key=lambda i: i.value,
+        reverse=True, # changes to descending order
+    )
     
     # Cap amount of cash up for grabs
     if my_cash > 150:

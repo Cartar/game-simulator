@@ -23,6 +23,9 @@ class Player:
         self.accept_strat = accept_strat
         self.min_sale = min_sale
         self.buy_rate = buy_rate
+        self.crypto_sold = []
+        self.end_sold = []
+        self.num_bids_won = 0
 
     def bid(self, card):
         # Return a tuple with the cash amount and a list of cards offered in the bid
@@ -32,22 +35,44 @@ class Player:
         # Return the chosen bid
         return self.accept_strat(bids, card, self.buy_rate)
 
-    def sell_crypto(self):
+    def sell_crypto(self, turn_num):
         # Update the player's cash and portfolio if there is anything to sell:
         card_to_sell = max(self.portfolio, key=lambda card: card.value)
         sold = False
 
-        while card_to_sell and len(self.portfolio) > 3:
+        while card_to_sell and len(self.portfolio) >= 3:
             if card_to_sell.value > self.min_sale:
                 self.cash += card_to_sell.value
                 self.portfolio.remove(card_to_sell)
+                self.crypto_sold.append((turn_num, card_to_sell))
                 card_to_sell = max(self.portfolio, key=lambda card: card.value)
                 sold = True
             else:
                 card_to_sell = None
-        
-        return sold
 
+        return sold
+    
+    def game_end(self):
+        # When someone wins, sum all crypto that could be sold
+        card_to_sell = max(self.portfolio, key=lambda card: card.value)
+
+        while card_to_sell and len(self.portfolio) >= 3:
+            self.cash += card_to_sell.value
+            self.portfolio.remove(card_to_sell)
+            self.end_sold.append(card_to_sell)
+            card_to_sell = max(self.portfolio, key=lambda card: card.value)
+
+         
+        return (
+            self.__str__(),
+            self.cash,
+            [(turn, card) for turn, card in self.crypto_sold],
+            [card for card in self.end_sold],
+            [card for card in self.portfolio],
+            self.min_sale,
+            self.buy_rate,
+            self.num_bids_won,
+        )
+        
     def __str__(self):
         return f"{self.name} - Cash: ${self.cash}, Portfolio Value: ${sum(card.value for card in self.portfolio)}"
-
