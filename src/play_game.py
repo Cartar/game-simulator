@@ -164,7 +164,7 @@ Your portfolio: {[card.name for card in self.human_player.portfolio]}
                 print(f"Player {player.name} sold {new_sold[1].name}!")
         
         # See if human would like to sell anything?
-        display_turn_state(None, None)
+        self.display_turn_state(None, None)
         print(f"Your cash: {self.human_player.cash}")
         print(f"Your portfolio: {[c.name for c in self.human_player.portfolio]} \n")
         wants_to_sell = bool(input("Would you like to sell anything? (blank for no)"))

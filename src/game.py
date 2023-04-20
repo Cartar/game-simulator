@@ -19,8 +19,11 @@ class Game:
     # Define methods for simulating a round, checking for a winner, and running the game
 
     def __init__(self, num_players, starting_cash, cards_per_crypto, winning_cash):
-        if num_players < 6:
+        
+        # In the 3 + 4 player version, add 2 extra crypto card to length the game
+        if num_players < 5:
             self.deck, self.all_cards = create_deck(num_players + 2, cards_per_crypto, 2)
+        # In the 5 + 6 player version, only need to add 1 extra crypto card
         else:
             self.deck, self.all_cards = create_deck(num_players + 1, cards_per_crypto, 1)
             
