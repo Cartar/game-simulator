@@ -122,13 +122,13 @@ Your portfolio: {[card.name for card in self.human_player.portfolio]}
             print("Players have bid the following...") 
             for bid in bids:
                 print(f"{bid[0].name}: ${bid[1][0]} & {[c.name for c in bid[1][1]]}")
-            select_bidder = input("Would you like to select a bid? (Blank for fals): ")
+            select_bidder = input("Would you like to select a bid? (Blank for false): ")
             if select_bidder:
                 bidder_selected = False
                 while bidder_selected != True:
                     chosen_bid = int(input("Which bid would you like to select?: "))
                     if chosen_bid:
-                        chosen_bid = bids[chosen_bid]
+                        chosen_bid = bids[chosen_bid-1]
                         bidder_selected = bool(input(f"Is this the correct bid you wanted: {chosen_bid[0].name}?: "))
             else:
                 chosen_bid = None

@@ -195,14 +195,14 @@ def end_game_stats(game, i):
         "Last bids won STD": last_bids,
 
         "Cards sold AVG": cards_sold_avg,
-        "Cards sold STD": cards_sold_std,
+        #"Cards sold STD": cards_sold_std,
         "1st cards sold STD": first_cards,
         "Last cards sold STD": last_cards,
 
-        "Cards sold GE AVG": cards_sold_GE_avg,
-        "Cards sold GE STD": cards_sold_GE_std,
-        "1st cards sold GE STD": first_end,
-        "Last cards sold GE STD": last_end,
+        #"Cards sold GE AVG": cards_sold_GE_avg,
+        #"Cards sold GE STD": cards_sold_GE_std,
+        #"1st cards sold GE STD": first_end,
+        #"Last cards sold GE STD": last_end,
     }
 
     return results

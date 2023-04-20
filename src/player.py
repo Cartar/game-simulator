@@ -40,14 +40,17 @@ class Player:
 
     def sell_crypto(self, turn_num):
         # Update the player's cash and portfolio if there is anything to sell:
+        max_sold_num = max_sold_math(len(self.portfolio))
         card_to_sell = max(self.portfolio, key=lambda card: card.value)
         sold = False
 
-        while card_to_sell and len(self.portfolio) >= 3:
+        while card_to_sell and max_sold_num > 0:
             if card_to_sell.value > self.min_sale:
                 self.cash += card_to_sell.value
                 self.portfolio.remove(card_to_sell)
                 self.crypto_sold.append((turn_num, card_to_sell))
+                # decrease max_sold_num and find new card:
+                max_sold_num -= 1
                 card_to_sell = max(self.portfolio, key=lambda card: card.value)
                 sold = True
             else:
@@ -57,14 +60,17 @@ class Player:
     
     def game_end(self):
         # When someone wins, sum all crypto that could be sold
+        # Determine max number of cards that could be sold:
+        max_sold_num = max_sold_math(len(self.portfolio))
         card_to_sell = max(self.portfolio, key=lambda card: card.value)
 
-        while card_to_sell and len(self.portfolio) >= 3:
+        while card_to_sell and max_sold_num > 0:
             self.cash += card_to_sell.value
             self.portfolio.remove(card_to_sell)
             self.end_sold.append(card_to_sell)
+            # decrease max_sold_num and find new card:
+            max_sold_num -= 1
             card_to_sell = max(self.portfolio, key=lambda card: card.value)
-
          
         return (
             self.__str__(),
@@ -79,3 +85,7 @@ class Player:
         
     def __str__(self):
         return f"{self.name} - Cash: ${self.cash}, Portfolio Value: ${sum(card.value for card in self.portfolio)}"
+
+def max_sold_math(l):
+    import math
+    return math.ceil(l/2-1)
